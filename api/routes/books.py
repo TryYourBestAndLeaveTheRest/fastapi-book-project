@@ -1,8 +1,9 @@
 
 from typing import OrderedDict
 
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, Request
 from fastapi.responses import JSONResponse
+import httpx
 
 from api.db.schemas import Book, Genre, InMemoryDB
 
@@ -70,4 +71,16 @@ async def delete_book(book_id: int) -> None:
     db.delete_book(book_id)
     return JSONResponse(status_code=status.HTTP_204_NO_CONTENT, content=None)
 
+
+@router.get("/get-location")
+async def get_location(request: Request):
+
+    user_ip = request.client.host
+
+    # Fetch geolocation data
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"http://ip-api.com/json/{user_ip}")
+        data = await response.json()
+
+    return data
 
