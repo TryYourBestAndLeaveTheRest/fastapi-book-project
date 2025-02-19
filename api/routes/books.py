@@ -72,15 +72,15 @@ async def delete_book(book_id: int) -> None:
     return JSONResponse(status_code=status.HTTP_204_NO_CONTENT, content=None)
 
 
-@router.get("/get-location")
-async def get_location(request: Request):
+# @router.get("/get-location")
+# async def get_location(request: Request):
+#     print('something')
+#     user_ip = request.client.host
 
-    user_ip = request.client.host
+#     # Fetch geolocation data
+#     async with httpx.AsyncClient() as client:
+#         response = await client.get(f"http://ip-api.com/json/{user_ip}")
+#         data = await response.json()
 
-    # Fetch geolocation data
-    async with httpx.AsyncClient() as client:
-        response = await client.get(f"http://ip-api.com/json/{user_ip}")
-        data = await response.json()
-
-    return data
+#     return data
 
